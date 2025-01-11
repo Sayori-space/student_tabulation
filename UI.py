@@ -30,40 +30,33 @@ class Application(Frame):
         self.formal_value = IntVar()
         self.back_value = IntVar()
 
-        # 图片部分
-        global photo_baimao
-        photo_baimao = ImageTk.PhotoImage(file="images/black.gif")
-        self.label_baimao = Label(self,image = photo_baimao)
-        self.label_baimao.place(relx=0.5, rely=0.5)
-
-
         menubar = Menu(root)
         menu_file = Menu(menubar)
         menu_choose = Menu(menubar)
-        menubar.add_cascade(label="文件(F)", menu=menu_file)
-        menubar.add_cascade(label="筛选(E)", menu=menu_choose)
+        menubar.add_cascade(label="文件", menu=menu_file)
+        menubar.add_cascade(label="筛选", menu=menu_choose)
 
 
         menu_file.add_command(label="导入Excel文件",command=self.import_excel)
         menu_file.add_separator()  # 添加分割线
-        menu_file.add_command(label="开始生成",command=self.add_name)
+        menu_file.add_command(label="开始生成", command=self.add_name)
         menu_file.add_separator()  # 添加分割线
-        menu_file.add_command(label="导出Excel文件",command=self.export_file)
+        menu_file.add_command(label="导出Excel文件", command=self.export_file)
 
-        menu_choose.add_checkbutton(label="去除副部",variable=self.fubu_value,
+        menu_choose.add_checkbutton(label="去除副部", variable=self.fubu_value,
                                     onvalue=1, offvalue=0)
         menu_choose.add_separator()
-        menu_choose.add_checkbutton(label="去除单周",variable=self.singal_value,
+        menu_choose.add_checkbutton(label="去除单周", variable=self.singal_value,
                                     onvalue=1, offvalue=0)
         menu_choose.add_separator()
-        menu_choose.add_checkbutton(label="去除双周",variable=self.double_value,
-                                    onvalue=1,offvalue=0)
+        menu_choose.add_checkbutton(label="去除双周", variable=self.double_value,
+                                    onvalue=1, offvalue=0)
         menu_choose.add_separator()
-        menu_choose.add_checkbutton(label="去除前八周",variable=self.formal_value,
-                                    onvalue=1,offvalue=0)
+        menu_choose.add_checkbutton(label="去除前八周", variable=self.formal_value,
+                                    onvalue=1, offvalue=0)
         menu_choose.add_separator()
-        menu_choose.add_checkbutton(label="去除后八周",variable=self.back_value,
-                                    onvalue=1,offvalue=0)
+        menu_choose.add_checkbutton(label="去除后八周", variable=self.back_value,
+                                    onvalue=1, offvalue=0)
 
         root['menu'] = menubar
 
@@ -80,10 +73,6 @@ class Application(Frame):
             class_index = class_list.index(i)
             self.label = Label(root,text="第"+i+"节")
             self.label.place(relx=0.05,rely = 0.3+class_index*0.1)
-
-
-
-
 
     def add_name(self):
         if self.target_excel:
@@ -122,9 +111,6 @@ class Application(Frame):
         else:
             messagebox.showerror("错误", "请先导入Excel文件")
 
-
-
-
     def import_excel(self):
         self.target_excel = filedialog.askopenfilename(title="上传Excel文件", initialdir="D:")
         self.manager = student_model_contraller(self.target_excel)
@@ -142,10 +128,12 @@ class Application(Frame):
                 final_list[i][j].append(name)
 
     def export_file(self):
-        print(self.manager.get_students_list())
-        self.manager.export_excel()
+        file_path = filedialog.asksaveasfilename(defaultextension=".xlsx",
+                                                 filetypes=[("Excel files", "*.xls")])
+        print(file_path)
+        self.manager.export_excel(file_path)
 
-    def append_name(self,current_list:list,target_list:list):
+    def append_name(self,current_list: list, target_list: list):
         for i in range(len(current_list)):
             for j in range(len(current_list[i])):
                 if current_list[i][j]:

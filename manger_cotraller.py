@@ -6,7 +6,7 @@ import random
 
 
 class student_model_contraller:
-    def __init__(self, excel_file : str):
+    def __init__(self, excel_file :str):
         self.excel_file = excel_file
         self.__students_list = [[[], [], [], [], []],
                                 [[], [], [], [], []],
@@ -90,7 +90,7 @@ class student_model_contraller:
                 elif random_name in repeated_list:
                     if len(self.__students_list[i[0]][i[1]]) > 1:
                         set_repeat = set(repeated_list)
-                        set_student_list =set(self.__students_list[i[0]][i[1]])
+                        set_student_list = set(self.__students_list[i[0]][i[1]])
                         set_target = set_student_list - set_repeat
                         new_random_name = list(set_target)[random.randint(0,len(set_target)-1)]
                         self.__students_list[i[0]][i[1]].clear()
@@ -127,7 +127,7 @@ class student_model_contraller:
                     y_list.append(j)
         return x_list
 
-    def export_excel(self):
+    def export_excel(self, save_path):
         week_list = ["一","二","三","四","五"]
         day_list = ["一","二","三","四"]
         wb = xlwt.Workbook()
@@ -145,8 +145,7 @@ class student_model_contraller:
                 ws.write(i+3, j+1, self.__students_list[i][j])
 
         ws.write_merge(0, 1, 0, 5, '学生值班表')
-
-        wb.save('test.xls')
+        wb.save(save_path)
 
 
 
