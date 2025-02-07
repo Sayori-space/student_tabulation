@@ -6,9 +6,11 @@ from tkinter import ttk
 from random import randint
 from PIL import ImageTk
 
+
+
 class Application(Frame):
     """一个经典的GUI程序的类的写法"""
-
+ 
     def __init__(self, master=None):
         super().__init__(master)        # super()代表的是父类的定义，而不是父类对象
         self.master = master
@@ -21,6 +23,8 @@ class Application(Frame):
                         [[], [], [], [], []],
                         [[], [], [], [], []],
                         [[], [], [], [], []]]
+
+
 
     def createWidget(self):
         """创建组件"""
@@ -114,7 +118,7 @@ class Application(Frame):
     def import_excel(self):
         self.target_excel = filedialog.askopenfilename(title="上传Excel文件", initialdir="D:")
         self.manager = student_model_contraller(self.target_excel)
-        show = Label(root, width=40, height=3, bg="grey")
+        show = Label(root, width=60, height=5, bg="grey")
         show.place(relx=0, rely=0)
         show["text"] = self.target_excel
 
@@ -140,7 +144,7 @@ class Application(Frame):
                     target_list[i][j].append(current_list[i][j])
                 else:
                     continue
-
+    
 
 
 
@@ -150,3 +154,5 @@ if __name__ == '__main__':
     root.title("半糖随机排表系统")
     app = Application(master=root)
     root.mainloop()
+
+        

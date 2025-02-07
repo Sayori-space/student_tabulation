@@ -2,7 +2,18 @@ import xlrd
 import xlwt
 import random
 
+'''
+项目名称：学生会随机排表系统
 
+项目概述：本程序的功能是帮助学生会成员实现自动化安排学生会值班表；
+
+程序结构概述：在算法部分项目创建一个控制器（student_model_contraller）类来实现逻辑控制；
+数据存储形式则是将数据存储在二维列表之中，注意本程序所有对原视数据的操作都是在对一个二维列表
+进行操作即student_model_contraller类中的student_list,所以任何变动请遵循此标准，不要再添加
+新的列表；如果要在student_model_contraller的外部获取stuednt_list,请使用student_model_contraller类中的get_students_list方法，
+即可获取二维列表。
+
+'''
 
 
 class student_model_contraller:
@@ -12,11 +23,13 @@ class student_model_contraller:
                                 [[], [], [], [], []],
                                 [[], [], [], [], []],
                                 [[], [], [], [], []]]
+        self.repeted_list = []
     def get_students_list(self):
         return self.__students_list
 
     def add_init_data(self):
         '''
+        从整理好的excel表格中读取原视数据
         将原始数据添加到student-list中
         :return:
         '''
@@ -30,7 +43,7 @@ class student_model_contraller:
 
     def sperate_name(self):
         '''
-        对添加完原视数据的student_list进行处理，去掉数据中的换行
+        对添加完原数据的student_list进行处理，去掉数据中的换行
         :return:
         '''
         temp_list = []
@@ -128,6 +141,9 @@ class student_model_contraller:
         return x_list
 
     def export_excel(self, save_path):
+        '''
+        将处理好的数据导出至excel
+        '''
         week_list = ["一","二","三","四","五"]
         day_list = ["一","二","三","四"]
         wb = xlwt.Workbook()
@@ -146,6 +162,24 @@ class student_model_contraller:
 
         ws.write_merge(0, 1, 0, 5, '学生值班表')
         wb.save(save_path)
+
+    def tag_repeated_names(self):
+        if len(self.__students_list[0][0]) == 1:
+            for i in range(len(self.__students_list)):
+                name = self.__students_list[i][0]
+                for j in range(self.__students_list[i+1:]):
+                    back_name = self.__students_list[j][0]
+                    if name == back_name:
+                        self.repeted_list.append(self.__students_list[i][0])
+                        self.repeted_list.append(self.__students_list[j][0])
+        else:
+            return
+
+    
+
+
+
+        
 
 
 
